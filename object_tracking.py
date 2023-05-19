@@ -7,6 +7,9 @@ import warnings
 from utilities import constants
 from utilities import helper
 import argparse
+import logging
+import time
+
 
 warnings.filterwarnings('ignore')
 WEBCAM_INPUT = 'cam'
@@ -37,6 +40,7 @@ def init(inputSrc):
 
 def main(tracker, thread_coco, thread_image):
     frameName = 'Main Frame'
+    log_file = open('results.log', 'w')
     print('Running a Tensorflow model with the DeepSORT Tracker')
     # Run the main loop
     while True:
@@ -52,10 +56,20 @@ def main(tracker, thread_coco, thread_image):
         key = cv2.waitKey(10)
         if key == ord('q'):
             break
+        # Print and log the tracking results
+        for i in range(len(output_data.tracker_ids)):
+            tracker_id = int(output_data.tracker_ids[i])
+            bbox = output_data.tracked_bbs[i]
+            log_msg = f"Tracker ID: {tracker_id}, BBox: {bbox}"
+            print(log_msg)
+            log_file.write(log_msg + '\n')
+
+    log_file.close()   
     cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
+    logging.basicConfig(filename='results.log', level=logging.INFO)
     parser = argparse.ArgumentParser(
         description='SSD object detection with DeepSORT tracking')
     parser.add_argument('--input', default='cam',
