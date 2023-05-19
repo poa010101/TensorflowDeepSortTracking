@@ -2,17 +2,17 @@
 from __future__ import absolute_import
 import numpy as np
 #  not used anymore: from sklearn.utils.linear_assignment_ import linear_assignment
-from scipy.optimize import linear_assignment
+from scipy.optimize import linear_sum_assignment
 from . import kalman_filter
 
 
 INFTY_COST = 1e+5
 
 
-def min_cost_matching(
+"""def min_cost_matching(
         distance_metric, max_distance, tracks, detections, track_indices=None,
         detection_indices=None):
-    """Solve linear assignment problem.
+    Solve linear assignment problem.
 
     Parameters
     ----------
@@ -44,7 +44,7 @@ def min_cost_matching(
         * A list of unmatched track indices.
         * A list of unmatched detection indices.
 
-    """
+    
     if track_indices is None:
         track_indices = np.arange(len(tracks))
     if detection_indices is None:
@@ -73,7 +73,41 @@ def min_cost_matching(
             unmatched_detections.append(detection_idx)
         else:
             matches.append((track_idx, detection_idx))
+    return matches, unmatched_tracks, unmatched_detections"""
+
+
+def min_cost_matching(distance_metric, max_distance, tracks, detections,
+                      track_indices=None, detection_indices=None):
+    if track_indices is None:
+        track_indices = list(range(len(tracks)))
+    if detection_indices is None:
+        detection_indices = list(range(len(detections)))
+
+    if len(detection_indices) == 0 or len(track_indices) == 0:
+        return [], track_indices, detection_indices  # Nothing to match.
+
+    cost_matrix = distance_metric(
+        tracks, detections, track_indices, detection_indices)
+    cost_matrix[cost_matrix > max_distance] = max_distance + 1e-5
+    row_indices, col_indices = linear_sum_assignment(cost_matrix)
+
+    matches, unmatched_tracks, unmatched_detections = [], [], []
+    for col, detection_idx in enumerate(detection_indices):
+        if col not in col_indices:
+            unmatched_detections.append(detection_idx)
+    for row, track_idx in enumerate(track_indices):
+        if row not in row_indices:
+            unmatched_tracks.append(track_idx)
+    for row, col in zip(row_indices, col_indices):
+        track_idx = track_indices[row]
+        detection_idx = detection_indices[col]
+        if cost_matrix[row, col] > max_distance:
+            unmatched_tracks.append(track_idx)
+            unmatched_detections.append(detection_idx)
+        else:
+            matches.append((track_idx, detection_idx))
     return matches, unmatched_tracks, unmatched_detections
+
 
 
 def matching_cascade(
