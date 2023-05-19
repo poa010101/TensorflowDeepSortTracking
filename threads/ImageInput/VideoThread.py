@@ -33,7 +33,7 @@ class VideoThread(AbstractImageInputThread):
         while not self.done:
             is_read, image_np = self.cap.read()
             if not is_read:
-                self.cap.set(cv2.cv2.CAP_PROP_POS_FRAMES, 0)
+                self.cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
             else:
                 self.image_data.image_np = image_np
             
