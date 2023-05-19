@@ -1,6 +1,7 @@
 # Deep SORT with Tensorflow
 
 I took over the code and made it upto date.I fixed all the lib issues.
+Add result output into results.log file as well as CLI.
 
 ## Introduction
 
