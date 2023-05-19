@@ -18,7 +18,7 @@ WEBCAM_INPUT = 'cam'
 def init(inputSrc):
     if inputSrc == WEBCAM_INPUT:
         # Run the webcam thread
-        thread_image = WebcamThread('Webcam Thread', 1)
+        thread_image = WebcamThread('Webcam Thread', 0)
     else:
         thread_image = VideoThread('Video Thread', inputSrc, FPS=25.0)
 
