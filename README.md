@@ -1,6 +1,6 @@
 # Deep SORT with Tensorflow
 
-**NOTE. This repository is no longer actively maintained by me. However, if others would like to make changes, please put up a Pull request and I'll do my best to merge the changes ASAP. Happy coding! :)**
+I took over the code and made it upto date.I fixed all the lib issues.
 
 ## Introduction
 
