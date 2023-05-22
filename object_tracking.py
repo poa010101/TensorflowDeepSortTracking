@@ -13,12 +13,16 @@ import time
 
 warnings.filterwarnings('ignore')
 WEBCAM_INPUT = 'cam'
+RTSP_INPUT = 'rtsp://127.0.0.1:5000/test'
 
 
 def init(inputSrc):
     if inputSrc == WEBCAM_INPUT:
         # Run the webcam thread
         thread_image = WebcamThread('Webcam Thread', 0)
+    elif inputSrc == RTSP_INPUT:
+        # Run the video thread for the RTSP stream
+        thread_image = VideoThread('RTSP Thread', RTSP_INPUT, FPS=25.0)
     else:
         thread_image = VideoThread('Video Thread', inputSrc, FPS=25.0)
 
@@ -72,8 +76,8 @@ if __name__ == "__main__":
     logging.basicConfig(filename='results.log', level=logging.INFO)
     parser = argparse.ArgumentParser(
         description='SSD object detection with DeepSORT tracking')
-    parser.add_argument('--input', default='cam',
-                        help='"cam" for Webcam or video file path')
+    parser.add_argument('--input', default=RTSP_INPUT,
+                        help='"cam" for Webcam, "rtsp://127.0.0.1:5000/test" for RTSP or video file path')
 
     args = parser.parse_args()
 
