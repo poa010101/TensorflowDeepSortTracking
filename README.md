@@ -1,7 +1,5 @@
-# Deep SORT with Tensorflow
+# Real-time Video Streaming Object Tracking (Rstreamer) using GStreamer, SSD Model,  Deep SORT and Tensorflow
 
-I took over the code and made it upto date.I fixed all the lib issues.
-Add result output into results.log file as well as CLI.
 
 ## Introduction
 
@@ -27,7 +25,12 @@ Your directory structure should look something like this:
   frozen_inference_graph.pb
   mscoco_label_map.pbtxt
 
-## Setup
+##Setup source rtsp server using webcam as source on host machine##########
+
+sudo apt-get update && apt-get install -y libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-rtsp gir1.2-gst-rtsp-server-1.0
+sudo python3 rtsp_server.py
+
+## Setup Docker for sink############
 sudo docker buildx build -t rstreamer .
 sudo docker run --privileged -it --device=/dev/video1:/dev/video0 --net=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v /app:/app rstreamer
 """""""""Inside docker""""""""""""""
