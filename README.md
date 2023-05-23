@@ -12,11 +12,6 @@ This repository is an implementation to perform realtime tracking with Tensorflo
 ## Dependencies
 It's recommended that this is run in a python virtual environment [see here for more information](https://docs.python.org/3/library/venv.html). Ensure all of the dependencies in the [Deep SORT](https://github.com/nwojke/deep_sort) are installed.
 
-Then install the dependencies with:
-- `pip3 install -r requirements.txt`
-
-
-## Setup
 1. Download the [SSD Model](http://download.tensorflow.org/models/object_detection/ssd_inception_v2_coco_2018_01_28.tar.gz)
 2. Copy the ```frozen_inference_graph.pb``` to the root directory of this repository.
 3. Download the [Label Map](https://raw.githubusercontent.com/tensorflow/models/master/research/object_detection/data/mscoco_label_map.pbtxt)
@@ -31,7 +26,15 @@ Your directory structure should look something like this:
   object_tracking.py
   frozen_inference_graph.pb
   mscoco_label_map.pbtxt
-```
+
+## Setup
+sudo docker buildx build -t rstreamer .
+sudo docker run --privileged -it --device=/dev/video1:/dev/video0 --net=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v /app:/app rstreamer
+"""""""""Inside docker""""""""""""""
+export DISPLAY=:1
+xvfb-run -s "-screen 0 1280x1024x24" python3 object_tracking.py --input burks-catch.mp4
+xvfb-run -s "-screen 0 1280x1024x24" python3 object_tracking.py --input rtsp://127.0.0.1:5000/test
+""""""""""""""""""""""""
 
 ## Basic Usage
 Run the file in your terminal by typing in ```python object_tracking.py```. The script will open up your webcam feed and begin detecting and tracking. The bounding boxes with the class labels are the result of detection from the SSD model. The overlayed blue bounding boxes are the output of the DeepSORT tracker.
