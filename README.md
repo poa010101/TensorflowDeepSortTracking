@@ -8,12 +8,12 @@ This repository is an implementation to perform realtime tracking with Tensorflo
 ![alt text](https://github.com/omarabid59/TensorflowDeepSortTracking/blob/master/output_9Diy2e.gif)
 
 ## Dependencies
-It's recommended that this is run in a python virtual environment [see here for more information](https://docs.python.org/3/library/venv.html). Ensure all of the dependencies in the [Deep SORT](https://github.com/nwojke/deep_sort) are installed.
+We used following AI model
 
-1. Download the [SSD Model](http://download.tensorflow.org/models/object_detection/ssd_inception_v2_coco_2018_01_28.tar.gz)
-2. Copy the ```frozen_inference_graph.pb``` to the root directory of this repository.
-3. Download the [Label Map](https://raw.githubusercontent.com/tensorflow/models/master/research/object_detection/data/mscoco_label_map.pbtxt)
-4. Copy ```mscoco_label_map.pbtxt``` that you just downloaded to the root directory of this repository.
+1. [SSD Model](http://download.tensorflow.org/models/object_detection/ssd_inception_v2_coco_2018_01_28.tar.gz)
+2. [Deep SORT](https://github.com/nwojke/deep_sort) are installed.
+3. [Label Map](https://raw.githubusercontent.com/tensorflow/models/master/research/object_detection/data/mscoco_label_map.pbtxt)
+
 
 Your directory structure should look something like this:
 ```
