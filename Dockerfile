@@ -4,8 +4,6 @@ MAINTAINER Danny Wang
 # Set DEBIAN_FRONTEND to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
 
-
-
 RUN apt-get update && apt-get install -y python3-pip python3-dev git wget tar
 
 RUN pip3 install --upgrade pip
@@ -27,7 +25,6 @@ RUN apt-get update && apt-get install -y libgstreamer1.0-0 gstreamer1.0-plugins-
 RUN apt-get install -y python3-gi python3-gi-cairo gir1.2-gtk-3.0
 RUN pip3 install --upgrade pip
 RUN pip3 install PyGObject
-
 
 # Install OpenCV
 RUN git clone https://github.com/opencv/opencv.git /opencv
